@@ -88,6 +88,14 @@ document.addEventListener("DOMContentLoaded", function () {
       .getElementById("profileForm")
       .addEventListener("submit", actualizarUsuario);
   }
+  const btnCerrarSesion = document.getElementById("btnCerrarSesion");
+  if (btnCerrarSesion) {
+    btnCerrarSesion.addEventListener("click", function () {
+      localStorage.removeItem("userid")
+      window.location.href = "login.html";
+    });
+  }
 });
+
 
 consultarUsuario();
