@@ -1,0 +1,7 @@
+.carousel-inner img {
+    width: 100vw;
+    height: 695px; /* Ajusta la altura según necesites */
+    object-fit: contain; /* Recorta la imagen sin deformarla */
+    background-color: #799777;
+    
+}

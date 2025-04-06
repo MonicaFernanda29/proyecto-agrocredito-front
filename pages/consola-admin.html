@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administración - AgroCrédito</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #e8f5e9;
+            /* Verde suave */
+        }
+
+        .card {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-success {
+            background-color: #4caf50;
+            border: none;
+        }
+
+        .btn-success:hover {
+            background-color: #388e3c;
+        }
+
+        .table th {
+            background-color: #4caf50;
+            color: white;
+        }
+
+        .nav-tabs .nav-link {
+            color: #4caf50;
+            font-weight: bold;
+        }
+
+        .nav-tabs .nav-link.active {
+            background-color: #4caf50;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="usuarios-tab" data-bs-toggle="tab" data-bs-target="#usuarios"
+                    type="button" role="tab">Gestión de Usuarios</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="productos-tab" data-bs-toggle="tab" data-bs-target="#productos"
+                    type="button" role="tab">Gestión de Productos</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="perfil-tab" data-bs-toggle="tab" data-bs-target="#perfil" type="button"
+                    role="tab">Perfil Administrador</button>
+            </li>
+        </ul>
+
+        <div class="tab-content mt-3" id="myTabContent">
+            <!-- Gestión de Usuarios -->
+            <div class="tab-pane fade" id="usuarios" role="tabpanel">
+                <div class="card">
+                    <h2 class="text-center">Registrar Nuevo Usuario</h2>
+                    <form id="registerFormAdmin">
+                        <div class="row">
+                            <div class="col-md-6 mb-3 form-floating">
+                                <input type="text" class="form-control" id="nombre_usuario" placeholder="Nombre" required>
+                                <label for="nombre">Nombre</label>
+                            </div>
+                            <div class="col-md-6 mb-3 form-floating">
+                                <input type="text" class="form-control" id="apellido_usuario" placeholder="Apellido" required>
+                                <label for="apellido">Apellido</label>
+                            </div>
+                            <div class="col-md-6 mb-3 form-floating">
+                                <input type="tel" class="form-control" id="celular_usuario" placeholder="Celular" required>
+                                <label for="celular">Celular</label>
+                            </div>
+                            <div class="col-md-6 mb-3 form-floating">
+                                <input type="text" class="form-control" id="ciudad_usuario" placeholder="Ciudad" required>
+                                <label for="ciudad">Ciudad</label>
+                            </div>
+                            <div class="col-md-6 mb-3 form-floating">
+                                <input type="text" class="form-control" id="direccion_usuario" placeholder="Dirección" required>
+                                <label for="direccion">Dirección</label>
+                            </div>
+                            <div class="col-md-6 mb-3 form-floating">
+                                <input type="date" class="form-control" id="fecha_nacimiento_usuario" required>
+                                <label for="fecha_nacimiento">Fecha de Nacimiento</label>
+                            </div>
+                            <div class="col-md-6 mb-3 form-floating">
+                                <input type="email" class="form-control" id="correo_usuario" placeholder="Correo Electrónico"
+                                    required>
+                                <label for="correo">Correo Electrónico</label>
+                            </div>
+                            <div class="col-md-6 mb-3 form-floating">
+                                <input type="password" class="form-control" id="contrasena_usuario" placeholder="Contraseña"
+                                    required>
+                                <label for="contrasena">Contraseña</label>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="rol" class="form-label">Selecciona tu rol</label>
+                                <select class="form-select" id="rol_usuario" required>
+                                    <option value="cliente">Cliente</option>
+                                    <option value="admin">Administrador</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-success w-100">Registrars Usuario</button>
+                    </form>
+                    <hr>
+                    <h4 class="text-center">Lista de Usuarios</h4>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                                <th>Celular</th>
+                                <th>Ciudad</th>
+                                <th>Dirección</th>
+                                <th>Fecha de Nacimiento</th>
+                                <th>Correo</th>
+                                <th>Rol</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaUsuarios">
+                            <!-- Usuarios agregados dinámicamente -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Gestión de Productos -->
+            <div class="tab-pane fade" id="productos" role="tabpanel">
+                <div class="card">
+                    <h2 class="text-center">Agregar Nuevo Producto</h2>
+                    <form id="productoForm">
+                        <div class="row">
+                            <div class="col-md-6 mb-3 form-floating">
+                                <input type="text" class="form-control" id="nombre_producto" placeholder="Nombre Producto" required>
+                                <label for="nombre_producto">Nombre Producto</label>
+                            </div>
+                            <div class="col-md-6 mb-3 form-floating">
+                                <input type="text" class="form-control" id="descripcion_producto" placeholder="Descripcion" required>
+                                <label for="descripcion_producto">Descripcion</label>
+                            </div>
+                            <div class="col-md-6 mb-3 form-floating">
+                                <input type="number" class="form-control" id="precio_producto" placeholder="Precio" required>
+                                <label for="precio_producto">Precio</label>
+                            </div>
+                            <div class="col-md-6 mb-3 form-floating">
+                                <input type="text" class="form-control" id="categoria_producto" placeholder="Categoria" required>
+                                <label for="categoria_producto">Categoria</label>
+                            </div>
+                            <div class="col-md-6 mb-3 form-floating">
+                                <input type="number" class="form-control" id="stock_producto" placeholder="Stock" required>
+                                <label for="stock_producto">Stock</label>                   
+                            </div>
+                            <div class="col-md-6 mb-3 form-floating">
+                                <input type="text" class="form-control" id="imagen_producto" placeholder="Imagen Url" required>
+                                <label for="imagen_producto">Imagen Url</label>                   
+                            </div>
+                           
+                        </div>
+                        <button type="submit" class="btn btn-success w-100">Registrar Producto</button>
+                    </form>
+                    <hr>
+                    <h4 class="text-center">Lista de Usuarios</h4>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Descripcion</th>
+                                <th>Precio</th>
+                                <th>Categoria</th>
+                                <th>Stock</th>
+                                <th>Imagen</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaProductos">
+                            <!-- Productos agregados dinámicamente -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Perfil Administrador -->
+            <div class="tab-pane fade  show active" id="perfil" role="tabpanel">
+                <div class="card">
+                    <h2 class="text-center">Editar Perfil Administrador</h2>
+                    <form id="profileForm">
+                        <div class="row">
+                            <div class="col-md-6 mb-3 form-floating">
+                                <input type="text" class="form-control" id="nombre_admin" placeholder="Nombre" required>
+                                <label for="nombre">Nombre</label>
+                            </div>
+                            <div class="col-md-6 mb-3 form-floating">
+                                <input type="text" class="form-control" id="apellido_admin" placeholder="Apellido"
+                                    required>
+                                <label for="apellido">Apellido</label>
+                            </div>
+                            <div class="col-md-6 mb-3 form-floating">
+                                <input type="tel" class="form-control" id="celular_admin" placeholder="Celular"
+                                    required>
+                                <label for="celular">Celular</label>
+                            </div>
+                            <div class="col-md-6 mb-3 form-floating">
+                                <input type="text" class="form-control" id="ciudad_admin" placeholder="Ciudad" required>
+                                <label for="ciudad">Ciudad</label>
+                            </div>
+                            <div class="col-md-6 mb-3 form-floating">
+                                <input type="text" class="form-control" id="direccion_admin" placeholder="Dirección"
+                                    required>
+                                <label for="direccion">Dirección</label>
+                            </div>
+                            <div class="col-md-6 mb-3 form-floating">
+                                <input type="date" class="form-control" id="fecha_nacimiento_admin" required>
+                                <label for="fecha_nacimiento">Fecha de Nacimiento</label>
+                            </div>
+                            <div class="col-md-6 mb-3 form-floating">
+                                <input type="email" class="form-control" id="correo_admin"
+                                    placeholder="Correo Electrónico" required>
+                                <label for="correo">Correo Electrónico</label>
+                            </div>
+                            <div class="col-md-6 mb-3 form-floating">
+                                <input type="password" class="form-control" id="contrasena_admin"
+                                    placeholder="Nueva Contraseña">
+                                <label for="contrasena">Nueva Contraseña</label>
+                            </div>
+                            <div class="col-md-6 mb-3 form-floating">
+                                <input type="text" class="form-control" id="rol_admin" hidden="true">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-success w-100">Actualizar Perfil</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/cosola-admin.js"></script>
+   
+</body>
+
+</html>
