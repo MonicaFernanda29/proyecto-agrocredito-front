@@ -1,22 +1,34 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const searchInput = document.querySelector(".form-control[type='search']");
+    const searchInput = document.getElementById("busqueda");
     const container = document.getElementById("productos-container");
-    let productosGlobal = []; 
+    let productosGlobal = [];
 
+   
     async function cargarProductos() {
-        const response = await fetch(`http://localhost:8080/producto/list`);
-        const productos = await response.json();
-        
-        productosGlobal = productos; 
-        mostrarProductos(productos);
+        try {
+            const response = await fetch(`http://localhost:8080/producto/list`);
+            if (!response.ok) {
+                throw new Error(`Error al obtener productos: ${response.status}`);
+            }
+            productosGlobal = await response.json();
+            mostrarProductos(productosGlobal);
+        } catch (error) {
+            console.error("❌ Error al cargar los productos:", error);
+        }
     }
 
+  
     function mostrarProductos(productos) {
-        container.innerHTML = ""; 
+        container.innerHTML = ""; // Limpiar antes de agregar nuevos
+
+        if (productos.length === 0) {
+            container.innerHTML = "<p class='text-center'>No se encontraron productos</p>";
+            return;
+        }
 
         productos.forEach((producto) => {
             const col = document.createElement("div");
-            col.classList.add("col-md-3", "mb-4"); 
+            col.classList.add("col-md-3", "mb-4");
 
             col.innerHTML = `
                 <div class="card h-100">
@@ -33,36 +45,23 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    
-    function redirigirACategoria(categoria) {
-        const categorias = {
-            "fertilizantes": "fertilizantes.html",
-            "abonos": "abonos.html",
-            "semillas": "semillas.html"
-        };
+    function filtrarProductos() {
+        const texto = searchInput.value.toLowerCase();
 
-        
-        if (categorias[categoria]) {
-            window.location.href = `pages/categories/${categorias[categoria]}`;
-        }
+        const productosFiltrados = productosGlobal.filter(producto =>
+            producto.nombre.toLowerCase().includes(texto) ||
+            producto.descripcion.toLowerCase().includes(texto)
+        );
+        mostrarProductos(productosFiltrados);
     }
 
-    if (searchInput) { 
-        searchInput.addEventListener("input", (event) => {
-            const texto = event.target.value.toLowerCase();
-
-            
-            redirigirACategoria(texto);
-
-           
-            const productosFiltrados = productosGlobal.filter(producto => 
-                producto.nombre.toLowerCase().includes(texto) ||
-                producto.descripcion.toLowerCase().includes(texto)
-            );
-
-            mostrarProductos(productosFiltrados);  
-        });
+  
+    if (searchInput) {
+        searchInput.addEventListener("input", filtrarProductos);
+    } else {
+        console.error("❌ No se encontró el input de búsqueda");
     }
+
 
     cargarProductos();
 });

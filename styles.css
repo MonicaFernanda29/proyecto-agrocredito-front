@@ -1,7 +1,17 @@
-.carousel-inner img {
-    width: 100vw;
-    height: 695px; /* Ajusta la altura según necesites */
-    object-fit: contain; /* Recorta la imagen sin deformarla */
-    background-color: #799777;
-    
+.navbar-brand img {
+    transition: transform 0.3s ease-in-out;
+}
+
+.navbar-brand img:hover {
+    transform: scale(1.1);
+}
+
+.btn-light:hover {
+    background-color: #ffffff;
+    color: #198754;
+}
+
+.btn-outline-light:hover {
+    background-color: #ffffff;
+    color: #198754;
 }
